@@ -222,8 +222,6 @@ class Zlibrary:
             res = requests.get(dlink, headers=self.__headers, cookies=self.__cookies)
             if res.status_code == 200:
                 return filename, res.content
-            else:
-                print(res.text)
 
     def downloadBook(self, book: Dict[str, str]):
         return self.__getBookFile(book["id"], book["hash"])
