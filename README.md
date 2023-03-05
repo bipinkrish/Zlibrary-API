@@ -172,7 +172,7 @@ results = Z.search(message='The Great Gatsby')
 imgcont = Z.getImage(results["books"][0])
 
 # Writting image content to a file
-with open("img.jpg", "rb") as imgfile:
+with open("img.jpg", "wb") as imgfile:
     imgfile.write(imgcont)
 ```
 
@@ -190,7 +190,7 @@ most_popular = Z.getMostPopular()
 filename, filecont = Z.downloadBook(most_popular["boooks][0])
 
 # Writting file content to a file
-with open(filename, "rb") as bookfile:
+with open(filename, "wb") as bookfile:
     bookfile.write(filecont)
 ```
 
