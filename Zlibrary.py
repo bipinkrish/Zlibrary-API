@@ -1,5 +1,5 @@
 import requests
-from typing import Union, List, Dict
+from typing import Union, Dict
 
 class Zlibrary:
 
@@ -29,6 +29,8 @@ class Zlibrary:
             self.loginWithToken(remix_userid, remix_userkey)
 
     def __setValues(self, response) -> Dict[str, str]:
+        if not response["success"]:
+            return response
         self.__email = response["user"]["email"]
         self.__name = response["user"]["name"]
         self.__kindle_email = response["user"]["kindle_email"]
@@ -61,7 +63,8 @@ class Zlibrary:
 
     def __makePostRequest(self, url: str, data: dict = {}, override=False) -> Dict[str, str]:
         if not self.__logged and override is False:
-            raise Exception("Not logged in")
+            print("Not logged in")
+            return
         response = requests.post(
             self.__domain + url,
             data=data,
@@ -69,12 +72,13 @@ class Zlibrary:
             headers=self.__headers,
         ).json()
         if not response["success"]:
-            raise Exception(response["error"])
+            print(response["error"])
         return response
 
     def __makeGetRequest(self, url: str, params: dict = {}, cookies=None) -> Dict[str, str]:
         if not self.__logged and cookies is None:
-            raise Exception("Not logged in")
+            print("Not logged in")
+            return
         response = requests.get(
             self.__domain + url,
             params=params,
@@ -82,7 +86,7 @@ class Zlibrary:
             headers=self.__headers,
         ).json()
         if not response["success"]:
-            raise Exception(response["error"])
+            print(response["error"])
         return response
 
     def getProfile(self) -> Dict[str, str]:
@@ -189,4 +193,37 @@ class Zlibrary:
                                                          "extensions": extensions, "order": order,
                                                          "page": page, "limit": limit,
                                                          }.items() if v is not None})
- 
+
+    def __getImageData(self, url: str) -> requests.Response.content:
+        path = url.split("books")[-1]
+        for domain in self.__personalDomains:
+            url = "https://" + domain + "/covers/books" + path
+            res = requests.get(url, headers=self.__headers,
+                               cookies=self.__cookies)
+            if res.status_code == 200:
+                return res.content
+
+    def getImage(self, book: Dict[str, str]) -> requests.Response.content:
+        return self.__getImageData(book["cover"])
+
+    def __getBookFile(self, bookid: Union[int, str], hashid: str):
+        response = self.__makeGetRequest(f"/eapi/book/{bookid}/{hashid}/file")
+        filename = response['file']['description']
+        try:
+            filename += " (" + response["file"]["author"] + ")"
+        except:
+            pass
+        finally:
+            filename += "." + response['file']['extension']
+        token = response["file"]["downloadLink"].split("/dtoken/")[-1]
+
+        for domain in self.__personalDomains:
+            dlink = "https://" + domain + "/dtoken/" + token
+            res = requests.get(dlink, headers=self.__headers, cookies=self.__cookies)
+            if res.status_code == 200:
+                return filename, res.content
+            else:
+                print(res.text)
+
+    def downloadBook(self, book: Dict[str, str]):
+        return self.__getBookFile(book["id"], book["hash"])
