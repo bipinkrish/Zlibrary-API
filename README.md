@@ -1,8 +1,6 @@
 # Zlibrary-API
 
-Zlibarary API for Python based on Android App Endpoints.
-
-No need for Libraries, just copy Zlibrary.py file to your project directory, one File can handle all your requests.
+Unofficial Zlibarary API for Python. No need for Libraries, just copy ```Zlibrary.py``` file to your project directory, one File can handle all your requests.
 
 Only dependency is ```requests``` you can install it using 
 
