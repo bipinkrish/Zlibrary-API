@@ -19,7 +19,7 @@ from Zlibrary import Zlibrary
 
 ## Logging in
 
-* ### while creating object
+* ### While creating Object
 ```
 Z = Zlibrary(email="xxx@mail.com", password="password") # using mail and password
 
@@ -27,7 +27,7 @@ Z = Zlibrary(email="xxx@mail.com", password="password") # using mail and passwor
 
 Z = Zlibrary(remix_userid="12345", remix_userkey="abcdef") # using remix id and keys
 ```
-* ### after object creation
+* ### After Object creation
 ```
 Z = Zlibrary()
 
@@ -156,7 +156,7 @@ downloadBook(book: Dict[str, str]) -> List[str, requests.Response.content]
 
 # Examples
 
-* ### Getting image
+* ### Handling Image
 ```
 from Zlibrary import Zlibrary
 
@@ -174,7 +174,7 @@ with open("img.jpg", "wb") as imgfile:
     imgfile.write(imgcont)
 ```
 
-* ### Downloading a book
+* ### Downloading a Book
 ```
 from Zlibrary import Zlibrary
 
