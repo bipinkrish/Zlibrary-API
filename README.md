@@ -185,7 +185,7 @@ Z = Zlibrary(email="xxx@mail.com", password="password")
 most_popular = Z.getMostPopular()
 
 # Downloading a book
-filename, filecont = Z.downloadBook(most_popular["boooks"][0])
+filename, filecont = Z.downloadBook(most_popular["books"][0])
 
 # Writting file content to a file
 with open(filename, "wb") as bookfile:
