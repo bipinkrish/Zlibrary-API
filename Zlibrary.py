@@ -10,7 +10,7 @@ class Zlibrary:
         self.__remix_userid: Union[int, str]
         self.__remix_userkey: str
         self.__personalDomains: list
-        self.__domain = "https://singlelogin.me"
+        self.__domain = "https://singlelogin.re"
         self.__logged = False
 
         self.__headers = {
