@@ -196,4 +196,4 @@ with open(filename, "wb") as bookfile:
 
 # Credits for Endpoints
 
-* [zlibrary-eapi-documentation](https://github.com/baroxyton/zlibrary-eapi-documentation)
+* [zlibrary-eapi-documentation](https://github.com/baroxyton/zlibrary-eapi-documentation) by baroxyton
