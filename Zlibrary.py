@@ -9,8 +9,8 @@ class Zlibrary:
         self.__kindle_email: str
         self.__remix_userid: Union[int, str]
         self.__remix_userkey: str
-        self.__personalDomains: list
-        self.__domain = "https://singlelogin.re"
+        self.__domain = "https://singlelogin.se"
+        self.__downloadDomains = ["zlibrary-in.se", "zlibrary-africa.se"]
         self.__logged = False
 
         self.__headers = {
@@ -36,7 +36,6 @@ class Zlibrary:
         self.__kindle_email = response["user"]["kindle_email"]
         self.__remix_userid = str(response["user"]["id"])
         self.__remix_userkey = response["user"]["remix_userkey"]
-        self.__personalDomains = response["user"]["personalDomains"]
         self.__cookies["remix_userid"] = self.__remix_userid
         self.__cookies["remix_userkey"] = self.__remix_userkey
         self.__logged = True
@@ -217,7 +216,7 @@ class Zlibrary:
             filename += "." + response['file']['extension']
         token = response["file"]["downloadLink"].split("/dtoken/")[-1]
 
-        for domain in self.__personalDomains:
+        for domain in self.__downloadDomains:
             dlink = "https://" + domain + "/dtoken/" + token
             res = requests.get(dlink, headers=self.__headers, cookies=self.__cookies)
             if res.status_code == 200:
