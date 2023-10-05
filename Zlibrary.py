@@ -195,7 +195,7 @@ class Zlibrary:
 
     def __getImageData(self, url: str) -> requests.Response.content:
         path = url.split("books")[-1]
-        for domain in self.__personalDomains:
+        for domain in self.__downloadDomains:
             url = "https://" + domain + "/covers/books" + path
             res = requests.get(url, headers=self.__headers,
                                cookies=self.__cookies)
