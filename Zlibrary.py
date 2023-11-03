@@ -9,8 +9,8 @@ class Zlibrary:
         self.__kindle_email: str
         self.__remix_userid: Union[int, str]
         self.__remix_userkey: str
-        self.__domain = "https://singlelogin.se"
-        self.__downloadDomains = ["zlibrary-in.se", "zlibrary-africa.se"]
+        self.__domain = "singlelogin.se"
+        self.__imgDownloadDomains = ["z-library.se", "zlibrary-in.se", "zlibrary-africa.se"]
         self.__logged = False
 
         self.__headers = {
@@ -65,7 +65,7 @@ class Zlibrary:
             print("Not logged in")
             return
         response = requests.post(
-            self.__domain + url,
+            "https://" + self.__domain + url,
             data=data,
             cookies=self.__cookies,
             headers=self.__headers,
@@ -79,7 +79,7 @@ class Zlibrary:
             print("Not logged in")
             return
         response = requests.get(
-            self.__domain + url,
+            "https://" + self.__domain + url,
             params=params,
             cookies=self.__cookies if cookies is None else cookies,
             headers=self.__headers,
@@ -195,7 +195,7 @@ class Zlibrary:
 
     def __getImageData(self, url: str) -> requests.Response.content:
         path = url.split("books")[-1]
-        for domain in self.__downloadDomains:
+        for domain in self.__imgDownloadDomains:
             url = "https://" + domain + "/covers/books" + path
             res = requests.get(url, headers=self.__headers,
                                cookies=self.__cookies)
@@ -208,18 +208,20 @@ class Zlibrary:
     def __getBookFile(self, bookid: Union[int, str], hashid: str):
         response = self.__makeGetRequest(f"/eapi/book/{bookid}/{hashid}/file")
         filename = response['file']['description']
+
         try:
             filename += " (" + response["file"]["author"] + ")"
         except:
             pass
         finally:
             filename += "." + response['file']['extension']
-        token = response["file"]["downloadLink"].split("/dtoken/")[-1]
 
-        for domain in self.__downloadDomains:
-            dlink = "https://" + domain + "/dtoken/" + token
-            res = requests.get(dlink, headers=self.__headers, cookies=self.__cookies)
-            if res.status_code == 200:
+        ddl = response["file"]["downloadLink"]
+        headers = self.__headers.copy()
+        headers['authority'] = ddl.split("/")[2]
+
+        res = requests.get(ddl, headers=headers)
+        if res.status_code == 200:
                 return filename, res.content
 
     def downloadBook(self, book: Dict[str, str]):
