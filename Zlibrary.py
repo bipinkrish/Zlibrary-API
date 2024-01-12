@@ -10,7 +10,6 @@ class Zlibrary:
         self.__remix_userid: Union[int, str]
         self.__remix_userkey: str
         self.__domain = "singlelogin.se"
-        self.__imgDownloadDomains = ["z-library.se", "zlibrary-in.se", "zlibrary-africa.se"]
         self.__logged = False
 
         self.__headers = {
@@ -194,13 +193,9 @@ class Zlibrary:
                                                          }.items() if v is not None})
 
     def __getImageData(self, url: str) -> requests.Response.content:
-        path = url.split("books")[-1]
-        for domain in self.__imgDownloadDomains:
-            url = "https://" + domain + "/covers/books" + path
-            res = requests.get(url, headers=self.__headers,
-                               cookies=self.__cookies)
-            if res.status_code == 200:
-                return res.content
+        res = requests.get(url, headers=self.__headers)
+        if res.status_code == 200:
+            return res.content
 
     def getImage(self, book: Dict[str, str]) -> requests.Response.content:
         return self.__getImageData(book["cover"])
