@@ -98,11 +98,11 @@ getImage(book: dict[str, str]) -> requests.Response.content
 
 downloadBook(book: dict[str, str]) -> (str, requests.Response.content)
 
-isLoggedIn -> bool
+isLoggedIn() -> bool
 
-send_code(self, email: str, password: str, name: str) -> dict[str, str]
+sendCode(self, email: str, password: str, name: str) -> dict[str, str]
 
-verify_code(self, email: str, password: str, name: str, code: str) -> dict[str, str]
+verifyCode(self, email: str, password: str, name: str, code: str) -> dict[str, str]
 ```
 
 ---
