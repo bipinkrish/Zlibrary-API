@@ -1,6 +1,11 @@
 # Zlibrary-API
 
-Unofficial Zlibrary API for Python. No need for Libraries, just copy ```Zlibrary.py``` file to your project directory, one File can handle all your requests.
+![Python Version](https://img.shields.io/badge/python-3.6%20%7C%203.7%20%7C%203.8%20%7C%203.9%20%7C%203.10%20%7C%203.11-blue)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+Unofficial Python wrapper for the Zlibrary API, which allows you to interact with the Zlibrary service programmatically. With this library, you can perform various actions, such as searching for books, getting book details, downloading books, and more.
+
+No need for library, just copy ```Zlibrary.py``` file to your project directory, one File can handle all your requests.
 
 Only dependency is ```requests``` you can install it using 
 
@@ -13,23 +18,28 @@ pip install requests
 # Documentation
 
 ## Importing
-```
+
+```python
 from Zlibrary import Zlibrary
 ```
 
 ## Logging in
+
 It is recommended to use `remix_userid` and `remix_userkey` instead of `email` and `password` to login. you can get the said values from browser cookies or [login once using this library](#Guide) and then use the values in future.
 
 * ### While creating Object
-```
+
+```python
 Z = Zlibrary(email="xxx@mail.com", password="password") # using mail and password
 
 # OR
 
 Z = Zlibrary(remix_userid="12345", remix_userkey="abcdef") # using remix id and keys
 ```
+
 * ### After Object creation
-```
+
+```python
 Z = Zlibrary()
 
 Z.login(email="xxx@mail.com", password="password") # using mail and password
@@ -41,7 +51,7 @@ Z.loginWithToken(remix_userid="12345", remix_userkey="abcdef") # using remix id 
 
 ## Availabale Methods
 
-```
+```python
 getProfile() -> dict[str, str]
 
 getMostPopular(switch_language: str = None) -> dict[str, str]
@@ -110,7 +120,8 @@ verifyCode(self, email: str, password: str, name: str, code: str) -> dict[str, s
 # Examples
 
 * ### Handling Image
-```
+
+```python
 from Zlibrary import Zlibrary
 
 # Create Zlibrary object and login
@@ -128,7 +139,8 @@ with open("img.jpg", "wb") as imgfile:
 ```
 
 * ### Downloading a Book
-```
+
+```python
 from Zlibrary import Zlibrary
 
 # Create Zlibrary object and login
@@ -151,7 +163,7 @@ with open(filename, "wb") as bookfile:
 
 * ### To get REMIX values from email and password (Recommended)
 
-```
+```python
 from Zlibrary import Zlibrary
 
 Z = Zlibrary(email="abc@mail.com", password="xxxxxxxx")
