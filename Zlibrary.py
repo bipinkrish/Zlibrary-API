@@ -24,7 +24,7 @@ class Zlibrary:
         self.__kindle_email: str
         self.__remix_userid: [int, str]
         self.__remix_userkey: str
-        self.__domain = "singlelogin.se"
+        self.__domain = "singlelogin.re"
         self.__domains = [
             "z-library.se",
             "z-library.rs",
