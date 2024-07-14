@@ -1,6 +1,6 @@
 # Zlibrary-API
 
-![Python Version](https://img.shields.io/badge/python-3.6%20%7C%203.7%20%7C%203.8%20%7C%203.9%20%7C%203.10%20%7C%203.11-blue)
+![Python Version](https://img.shields.io/badge/python-3.6%20%7C%203.7%20%7C%203.8%20%7C%203.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Unofficial Python wrapper for the Zlibrary API, which allows you to interact with the Zlibrary service programmatically. With this library, you can perform various actions, such as searching for books, getting book details, downloading books, and more.
@@ -110,9 +110,11 @@ downloadBook(book: dict[str, str]) -> (str, requests.Response.content)
 
 isLoggedIn() -> bool
 
-sendCode(self, email: str, password: str, name: str) -> dict[str, str]
+sendCode(email: str, password: str, name: str) -> dict[str, str]
 
-verifyCode(self, email: str, password: str, name: str, code: str) -> dict[str, str]
+verifyCode(email: str, password: str, name: str, code: str) -> dict[str, str]
+
+getDownloadsLeft() -> int
 ```
 
 ---

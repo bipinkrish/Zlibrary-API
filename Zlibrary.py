@@ -7,7 +7,6 @@ For more information, see:
 https://github.com/bipinkrish/Zlibrary-API/
 """
 
-
 import requests
 
 
@@ -344,9 +343,9 @@ class Zlibrary:
             "/papi/user/verification/send-code", data=usr_data, override=True
         )
         if response["success"]:
-            response[
-                "msg"
-            ] = "Verification code is sent to mail, use verify_code to complete registration"
+            response["msg"] = (
+                "Verification code is sent to mail, use verify_code to complete registration"
+            )
         return response
 
     def verifyCode(
@@ -364,3 +363,9 @@ class Zlibrary:
             "gg_json_mode": 1,
         }
         return self.__makePostRequest("/rpc.php", data=usr_data, override=True)
+
+    def getDownloadsLeft(self) -> int:
+        user_profile: dict = self.getProfile()["user"]
+        return user_profile.get("downloads_limit", 10) - user_profile.get(
+            "downloads_today", 0
+        )
